@@ -174,9 +174,19 @@ data_dict.update({
 source = ColumnDataSource(data=data_dict) #wrap a datasource around the dictionary
 source.tags = [sample] # save sample name to tags to access for naming downloaded CSV files 
 
+tooltips = [
+    ("Row", "$index"),
+    ("Chromosome", "@chromosome"),
+    ("Gene", "@gene_name"),
+    ("Variant", "@variant"),
+    ("Reference", "@reference"),
+    ("Type", "@variant_type"),
+]
+
 p = figure(
     title = sample,
     # sizing_mode='stretch_both',
+    tooltips=tooltips,
     plot_height=800, plot_width=900,
 )
 
