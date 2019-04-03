@@ -14,8 +14,8 @@ from utils.pvacapi.controllers.utils import getIpAddress
 #FIXME: sanitize sample name
 def main():
     parser = argparse.ArgumentParser(description='pVACapi provides a REST API to pVACtools')
-    parser.add_argument('--ip_address', help='IP address for the HTTP server to bind. If not provided, the default socket address will be used.')
-    parser.add_argument('--proxy_ip_address', help='IP address of proxy server or public IP address. If provided, server will send X-Forward headers required for Bokeh to properly work through a proxy server or with AWS private/public IP addresses.')
+    parser.add_argument('--ip-address', help='IP address for the HTTP server to bind. If not provided, the default socket address will be used.')
+    parser.add_argument('--proxy-ip-address', help='IP address of proxy server or public IP address. If provided, server will send X-Forward headers required for Bokeh to properly work through a proxy server or with AWS private/public IP addresses.')
     parser.add_argument('--debug', default=False, action='store_true', help='Start sever in debug mode.')
     args = parser.parse_args()
 
@@ -41,6 +41,8 @@ def main():
 
     app.app.IP_ADDRESS = IP_ADDRESS
 
+    print(time.asctime(), "Starting pVACapi server at http://" + IP_ADDRESS + ":8080")
+    print(time.asctime(), "API schema UI available at http://" + IP_ADDRESS + ":8080/ui")
     # add forwarding headers if proxy_ip_address specified
     PROXY_IP_ADDRESS = None
     if args.proxy_ip_address is not None:
@@ -69,7 +71,6 @@ def main():
     #     origins=r'^(.+://)?' + IP_ADDRESS + r'(:\d+)?(/.*)?$'
     # )
 
-    print(time.asctime(), "Starting pVACapi server at http://" + IP_ADDRESS + ":8080")
     app.run(port=8080, debug=args.debug, threaded=True)
 
 if __name__ == '__main__':
